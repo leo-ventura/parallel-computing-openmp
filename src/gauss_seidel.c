@@ -6,6 +6,7 @@
 #define COLUMNS    3000
 #define ROWS       3000
 #define TEMP_BORDA 20
+#define TEMP_INICIAL 20
 #define MAX_TEMP_ERROR 0.01
 
 double Anew[ROWS+2][COLUMNS+2];
@@ -48,26 +49,13 @@ double dt = 100;
 void iniciar(){
     int i,j;
 
-    // preenche a matriz toda com 0
+    // preenche a placa de calor toda com a temperatura inicial
     for (i = 0; i <= ROWS+1; i++) {
-         for (j = 0; j <= COLUMNS+1; j++) {
-              A[i][j] = 0.0;
-         }
+        for (j = 0; j <= COLUMNS+1; j++) {
+            A[i][j] = TEMP_INICIAL;
+        }
     }
 
-    // para cada linha, preenche primeira posição com temperatura 0
-    // e última com calor aumentando gradativamente
-    for (i = 0; i <= ROWS+1; i++) {
-        //  A[i][0] = 0.0;
-        //  A[i][COLUMNS+1] = (100.0/ROWS)*i;
-        A[i][0] = TEMP_BORDA;
-        A[i][COLUMNS+1] = TEMP_BORDA;
-    }
-
-    // para cada coluna, preenche primeira posição com temperatura 0
-    // e última com calor aumentando gradativamente
-    for (j = 0; j <= COLUMNS+1; j++) {
-         A[0][j] = 0.0;
-         A[ROWS+1][j] = (100.0/COLUMNS)*j;
-    }
+    // Fonte de calor localizada no ponto 800x800
+    A[800][800] = 100.0;
 }
