@@ -14,9 +14,9 @@ double A[ROWS+2][COLUMNS+2];
 
 void iniciar();
 
-int main(int argc, char *argv[]) { /* jacobi_seq.c  */
+int main(int argc, char *argv[]) {
 int i, j;
-int max_iterations= 2<<10;
+int max_iterations= 1<<10;
 int iteration = 1;
 double dt = 100;
 
