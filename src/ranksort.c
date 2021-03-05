@@ -44,7 +44,7 @@ int find_rank(int* array, int n, int x) {
 int* ranksort(int* array, int n) {
     int* sorted_array = malloc(sizeof(int) * n);
 
-    #pragma omp parallel for
+    #pragma omp parallel for schedule(dynamic)
     for(int i = 0; i < n; i++) {
         int value = array[i];
         int rank = find_rank(array, n, value);
