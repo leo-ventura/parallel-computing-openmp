@@ -23,19 +23,17 @@ double dt = 100;
     iniciar();
     double start_time = omp_get_wtime();
     while (dt > MAX_TEMP_ERROR && iteration <= max_iterations ) {
-        #pragma omp parallel for collapse(2)
-        for (i = 1; i <= ROWS; i++) 
-            for (j = 1; j <= COLUMNS; j++) {
-                Anew[i][j] = 0.25 * (A[i+1][j] + 
-                    A[i-1][j] + A[i][j+1] + A[i][j-1]);
-            }
         dt = 0.0;
-
-        #pragma omp parallel for collapse(2)
+        #pragma omp parallel for collapse(2) shared(dt) ordered
         for (i = 1; i <= ROWS; i++)
             for (j = 1; j <= COLUMNS; j++) {
-                dt = fmax( fabs(Anew[i][j]-A[i][j]), dt);
-                A[i][j] = Anew[i][j];
+                double Anew_ij = 0.25 * (A[i+1][j] + 
+                    A[i-1][j] + A[i][j+1] + A[i][j-1]);
+                #pragma omp ordered
+                {
+                    dt = fmax(fabs(Anew_ij-A[i][j]), dt);
+                    A[i][j] = Anew_ij;
+                }
             }
 
         iteration++;
