@@ -24,7 +24,7 @@ double dt = 100;
     double start_time = omp_get_wtime();
     while (dt > MAX_TEMP_ERROR && iteration <= max_iterations ) {
         dt = 0.0;
-        #pragma omp parallel for collapse(2) shared(dt) ordered
+        #pragma omp parallel for collapse(2) shared(dt) schedule(static,1) ordered
         for (i = 1; i <= ROWS; i++)
             for (j = 1; j <= COLUMNS; j++) {
                 double Anew_ij = 0.25 * (A[i+1][j] + 
