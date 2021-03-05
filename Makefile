@@ -1,7 +1,7 @@
 .PHONY: all clean debug
 
 CC=gcc
-LIBS=-lm -fopenmp
+LIBS=-lm -fopenmp -lX11
 SRCDIR=src/
 BINDIR=bin/
 
